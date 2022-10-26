@@ -11,7 +11,7 @@ class NovelParser:
         all_titles = []
         titles = soup.find_all('div',{'class':'search_title'})
         for title in titles:
-            title_str = title.find('a').text
+            title_str = title.find('a')['href']
             all_titles.append(title_str)
         return all_titles
 
