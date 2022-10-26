@@ -82,9 +82,6 @@ def main():
                 curr_novel+=1
                 url_novel = f'https://www.novelupdates.com/series/{title_link}'
                 page_novel = Proxer().open_site(url_novel)
-            except AttributeError as error:
-                logger.error(f'Probably not available or something. Check this title: {title}, here: {url_novel}.')
-                continue
             except Exception as error:
                 logger.error(f'Proxer().open_site() encounters an error. Passing. Please retry. error with type {type(error).__name__}: {error}')
                 curr_novel-=1
@@ -99,6 +96,9 @@ def main():
                 if (curr_novel == max_novel):
                     novel_details_df.to_csv('NU_20221023')
                 print(f'SUCCESSFULLY FETCHED NOVEL {curr_novel}/{max_novel}')
+            except AttributeError as error:
+                logger.error(f'Probably not available or something. Check this title: {title}, here: {url_novel}.')
+                continue
             except Exception as error:
                 logger.error(f'NovelParser().parse_details() encounters an error while fetching novel {curr_novel}/{max_novel}. Passing. Please retry. error with type {type(error).__name__}: {error}')
                 curr_novel-=1
