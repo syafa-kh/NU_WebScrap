@@ -8,7 +8,6 @@ import regex as re
 
 # this main function is a behemoth and not very easy to read but it works!
 def main():
-    only_alphanumeric = re.compile('[^a-zA-Z\d\s-]+')
     logger = Logger().logger
     running = True
     max_page = 0
@@ -76,11 +75,8 @@ def main():
                 continue
         elif ((curr_page==max_page) & (curr_novel!=max_novel)):
             try:
-                title = all_titles_lst[curr_novel]
-                title_link = only_alphanumeric.sub('',title.lower().rstrip())
-                title_link = title_link.replace(' ','-')
+                url_novel = all_titles_lst[curr_novel]
                 curr_novel+=1
-                url_novel = f'https://www.novelupdates.com/series/{title_link}'
                 page_novel = Proxer().open_site(url_novel)
             except Exception as error:
                 logger.error(f'Proxer().open_site() encounters an error. Passing. Please retry. error with type {type(error).__name__}: {error}')
